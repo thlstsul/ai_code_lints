@@ -1,0 +1,25 @@
+[package]
+name = "ai_code_lints"
+version = "0.1.0"
+authors = ["thlstsul"]
+description = "Dylint lints for common problems in AI-generated code: test-only dead code, scattered `use` statements, and fully qualified paths without `use` imports."
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+clippy_utils = { git = "https://github.com/rust-lang/rust-clippy", rev = "878845221cb8c0f17440043f00b89045247ae3fe" }
+dylint_linting = "6.0"
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+dylint_testing = "6.0"
+
+[package.metadata.rust-analyzer]
+rustc_private = true
+
+[patch.crates-io]
+dylint_linting = { path = "local_patches/dylint_linting" }
+# keep the patched linting crate discoverable under its own name

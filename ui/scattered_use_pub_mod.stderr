@@ -1,0 +1,18 @@
+Regression UI: a body-less `pub mod` declaration acts as an import for
+grouping purposes, so a `pub use` directly after it must NOT be flagged.
+A misplaced `use` with a nested group (`{Crc32, crc32}`) must be flagged
+only ONCE even though rustc lowers the tree to several HIR items.
+
+Expected warnings (scattered_use_statement):
+
+warning: use statement after a non-use item; move it to the head of the module
+  --> src/lib.rs:14:1
+   |
+14 | pub use checksum::Extra;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: move this `use` statement to the top of the module with the other `use` statements
+
+Exactly ONE warning for the statement (no per-leaf duplicates at 14:20/14:27);
+no warning for the `pub mod checksum;` + `pub use checksum::{Crc32, crc32};` pair.
+

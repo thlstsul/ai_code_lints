@@ -1,0 +1,14 @@
+Regression UI for TEST_ONLY_DEAD_CODE: a body-less `pub mod` declaration
+followed by `pub use` re-exports must NOT be flagged — a public re-export
+is a deliberate part of the crate's API surface, and the intermediate
+module segment counts as used.
+
+Expected warnings (test_only_dead_code) — `checksum`, `Crc32`, `crc32`
+must NOT be reported; only the test-only items are:
+
+warning: item `widget` is only referenced by test code
+  --> src/lib.rs:12:1
+
+warning: item `dead_helper` is only referenced by test code
+  --> src/lib.rs:13:5
+

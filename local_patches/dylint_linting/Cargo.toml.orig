@@ -1,0 +1,61 @@
+[package]
+name = "dylint_linting"
+version = "6.1.0"
+authors = ["Samuel E. Moelius III <sam@moeli.us>"]
+description = "Utilities for writing Dylint libraries"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/trailofbits/dylint"
+
+[dependencies]
+cargo_metadata = "0.23"
+paste = "1.0"
+rustversion = "1.0"
+serde = "1.0"
+thiserror = "2.0"
+toml = "1.1"
+
+dylint_internal = { version = "=6.1.0", path = "../../internal", features = [
+    "config",
+] }
+
+[build-dependencies]
+toml = "1.1"
+
+dylint_internal = { version = "=6.1.0", path = "../../internal", features = [
+    "clippy_utils",
+] }
+
+[dev-dependencies]
+assert_cmd = "2.2"
+rustc_version = "0.4"
+tempfile = "3.27"
+
+[features]
+constituent = []
+
+[lints.clippy]
+nursery = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+
+[lints.rust.unexpected_cfgs]
+level = "deny"
+check-cfg = ["cfg(dylint_lib, values(any()))"]
+
+[package.metadata.docs.rs]
+rustc-args = ["--cfg", "docsrs"]
+
+[package.metadata.rust-analyzer]
+rustc_private = true
+
+[workspace]
+
+[workspace.metadata.dylint]
+libraries = [
+    { path = "../../examples/general" },
+    { path = "../../examples/supplementary" },
+    { path = "../../examples/testing/clippy" },
+    { path = "../../examples/restriction/*" },
+]
