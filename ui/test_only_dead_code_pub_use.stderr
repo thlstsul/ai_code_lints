@@ -1,14 +1,35 @@
-Regression UI for TEST_ONLY_DEAD_CODE: a body-less `pub mod` declaration
-followed by `pub use` re-exports must NOT be flagged — a public re-export
-is a deliberate part of the crate's API surface, and the intermediate
-module segment counts as used.
+warning: item `checksum` is only referenced by test code
+  --> $DIR/test_only_dead_code_pub_use.rs:10:1
+   |
+LL | pub mod checksum;
+   | ^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+   = note: `#[warn(test_only_dead_code)]` on by default
 
-Expected warnings (test_only_dead_code) — `checksum`, `Crc32`, `crc32`
-must NOT be reported; only the test-only items are:
+warning: item `Extra` is only referenced by test code
+  --> $DIR/checksum.rs:7:1
+   |
+LL | pub struct Extra;
+   | ^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
 
 warning: item `widget` is only referenced by test code
-  --> src/lib.rs:12:1
+  --> $DIR/test_only_dead_code_pub_use.rs:14:1
+   |
+LL | pub mod widget {
+   | ^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
 
 warning: item `dead_helper` is only referenced by test code
-  --> src/lib.rs:13:5
+  --> $DIR/test_only_dead_code_pub_use.rs:15:5
+   |
+LL |     pub fn dead_helper() {}
+   |     ^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: 4 warnings emitted
 

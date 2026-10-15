@@ -16,7 +16,9 @@ pub struct ScatteredUseStatement {
 
 /// True if `span` overlaps an already-reported statement span.
 fn already_reported(reported: &[Span], span: Span) -> bool {
-    reported.iter().any(|s| s.contains(span) || span.contains(*s))
+    reported
+        .iter()
+        .any(|s| s.contains(span) || span.contains(*s))
 }
 
 rustc_lint::declare_lint! {
@@ -57,7 +59,10 @@ rustc_lint::declare_lint! {
 }
 
 /// Sibling items of a module, with their spans, in source order.
-fn module_children<'tcx>(cx: &LateContext<'tcx>, node: Node<'tcx>) -> Vec<(&'tcx Item<'tcx>, Span)> {
+fn module_children<'tcx>(
+    cx: &LateContext<'tcx>,
+    node: Node<'tcx>,
+) -> Vec<(&'tcx Item<'tcx>, Span)> {
     let items: &[ItemId] = match node {
         Node::Crate(r#mod) => r#mod.item_ids,
         Node::Item(item) => match item.kind {
@@ -120,7 +125,10 @@ impl LateLintPass<'_> for ScatteredUseStatement {
         // `use` inside a body (e.g. a function) has some other node in
         // between (its enclosing block/owner).
         let module_level = matches!(
-            cx.tcx.hir_parent_iter(item.hir_id()).next().map(|(_, node)| node),
+            cx.tcx
+                .hir_parent_iter(item.hir_id())
+                .next()
+                .map(|(_, node)| node),
             Some(Node::Crate(_))
         ) || matches!(
             cx.tcx.hir_parent_iter(item.hir_id()).next().map(|(_, node)| node),

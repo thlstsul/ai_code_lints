@@ -1,0 +1,27 @@
+warning: item `crc32` is only referenced by test code
+  --> $DIR/checksum.rs:1:1
+   |
+LL | pub fn crc32(data: &[u8]) -> u32 {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+   = note: `#[warn(test_only_dead_code)]` on by default
+
+warning: item `Crc32` is only referenced by test code
+  --> $DIR/checksum.rs:5:1
+   |
+LL | pub struct Crc32;
+   | ^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `Extra` is only referenced by test code
+  --> $DIR/checksum.rs:7:1
+   |
+LL | pub struct Extra;
+   | ^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: 3 warnings emitted
+

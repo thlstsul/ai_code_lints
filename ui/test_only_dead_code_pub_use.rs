@@ -1,4 +1,6 @@
 #![allow(unused)]
+#![allow(dead_code)]
+#![crate_type = "lib"]
 
 // Regression UI for TEST_ONLY_DEAD_CODE: a body-less `pub mod` declaration
 // followed by `pub use` re-exports must NOT be flagged — a public re-export
@@ -20,3 +22,5 @@ mod tests {
         super::widget::dead_helper();
     }
 }
+
+fn main() {}

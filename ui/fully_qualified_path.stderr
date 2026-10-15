@@ -1,0 +1,290 @@
+warning: fully qualified path `crate::util::helper` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:23:5
+   |
+LL |     crate::util::helper();
+   |     ^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `helper` with a `use` statement at the module head
+   = note: `#[warn(fully_qualified_path_without_use)]` on by default
+
+warning: fully qualified path `crate::CONST_ITEM` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:136:5
+   |
+LL |     crate::CONST_ITEM
+   |     ^^^^^^^^^^^^^^^^^
+   |
+   = help: import `CONST_ITEM` with a `use` statement at the module head
+
+warning: fully qualified path `std::mem::drop` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:24:5
+   |
+LL |     std::mem::drop(0);
+   |     ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Result<()>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:36:26
+   |
+LL | pub fn unit_generic() -> std::io::Result<()> {
+   |                          ^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Result<(u32,String)>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:41:30
+   |
+LL | pub fn multi_elem_tuple() -> std::io::Result<(u32, String)> {
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::result::Result<u32,std::io::Error>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:46:30
+   |
+LL | pub fn two_generic_args() -> std::result::Result<u32, std::io::Error> {
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:46:55
+   |
+LL | pub fn two_generic_args() -> std::result::Result<u32, std::io::Error> {
+   |                                                       ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Result<std::io::Error>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:51:28
+   |
+LL | pub fn nested_generic() -> std::io::Result<std::io::Error> {
+   |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:51:44
+   |
+LL | pub fn nested_generic() -> std::io::Result<std::io::Error> {
+   |                                            ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:52:9
+   |
+LL |     Err(std::io::Error::other("x"))
+   |         ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::result::Result<Vec<(std::string::String,u32)>,std::io::Error>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:57:6
+   |
+LL | ) -> std::result::Result<Vec<(std::string::String, u32)>, std::io::Error> {
+   |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::string::String` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:57:31
+   |
+LL | ) -> std::result::Result<Vec<(std::string::String, u32)>, std::io::Error> {
+   |                               ^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:57:59
+   |
+LL | ) -> std::result::Result<Vec<(std::string::String, u32)>, std::io::Error> {
+   |                                                           ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::result::Result<Box<dynstd::fmt::Debug>,u32>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:62:34
+   |
+LL | pub fn trait_object_generic() -> std::result::Result<Box<dyn std::fmt::Debug>, u32> {
+   |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::fmt::Debug` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:62:62
+   |
+LL | pub fn trait_object_generic() -> std::result::Result<Box<dyn std::fmt::Debug>, u32> {
+   |                                                              ^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:67:31
+   |
+LL | pub fn plain_path_return() -> std::io::Error {
+   |                               ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:68:5
+   |
+LL |     std::io::Error::other("x")
+   |     ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:72:34
+   |
+LL | pub fn ref_return(base: &str) -> std::io::Error {
+   |                                  ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:74:5
+   |
+LL |     std::io::Error::other("x")
+   |     ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:78:12
+   |
+LL |     field: std::io::Error,
+   |            ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::cell::RefCell<Option<std::io::Error>>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:79:13
+   |
+LL |     nested: std::cell::RefCell<Option<std::io::Error>>,
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:79:39
+   |
+LL |     nested: std::cell::RefCell<Option<std::io::Error>>,
+   |                                       ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:83:20
+   |
+LL | pub struct Wrapper(std::io::Error);
+   |                    ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Result<Self>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:86:21
+   |
+LL |     pub fn new() -> std::io::Result<Self> {
+   |                     ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:87:17
+   |
+LL |         Ok(Self(std::io::Error::other("x")))
+   |                 ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::result::Result<T,std::io::Error>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:92:48
+   |
+LL | pub fn generic_fn<T: std::fmt::Debug>(t: T) -> std::result::Result<T, std::io::Error> {
+   |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:92:71
+   |
+LL | pub fn generic_fn<T: std::fmt::Debug>(t: T) -> std::result::Result<T, std::io::Error> {
+   |                                                                       ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::fmt::Debug` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:92:22
+   |
+LL | pub fn generic_fn<T: std::fmt::Debug>(t: T) -> std::result::Result<T, std::io::Error> {
+   |                      ^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::result::Result<T,std::io::Error>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:97:33
+   |
+LL | pub fn where_clause<T>(t: T) -> std::result::Result<T, std::io::Error>
+   |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:97:56
+   |
+LL | pub fn where_clause<T>(t: T) -> std::result::Result<T, std::io::Error>
+   |                                                        ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::fmt::Debug` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:99:8
+   |
+LL |     T: std::fmt::Debug,
+   |        ^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::result::Result<u32,std::io::Error>` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:105:23
+   |
+LL | pub fn turbofish() -> std::result::Result<u32, std::io::Error> {
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:105:48
+   |
+LL | pub fn turbofish() -> std::result::Result<u32, std::io::Error> {
+   |                                                ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: fully qualified path `std::io::Error` used instead of a `use` import
+  --> $DIR/fully_qualified_path.rs:106:32
+   |
+LL |     "1".parse::<u32>().map_err(std::io::Error::other)
+   |                                ^^^^^^^^^^^^^^
+   |
+   = help: import `std` (or its used item) with a `use` statement at the module head
+
+warning: calls to `std::mem::drop` with a value that implements `Copy` does nothing
+  --> $DIR/fully_qualified_path.rs:24:5
+   |
+LL |     std::mem::drop(0);
+   |     ^^^^^^^^^^^^^^^-^
+   |                    |
+   |                    argument has type `i32`
+   |
+   = note: `#[warn(dropping_copy_types)]` on by default
+help: use `let _ = ...` to ignore the expression or result
+   |
+LL -     std::mem::drop(0);
+LL +     let _ = 0;
+   |
+
+warning: 35 warnings emitted
+

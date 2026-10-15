@@ -1,0 +1,83 @@
+warning: item `NeverReferenced` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:15:5
+   |
+LL |     pub struct NeverReferenced;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+   = note: `#[warn(test_only_dead_code)]` on by default
+
+warning: item `widget` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:18:1
+   |
+LL | pub mod widget {
+   | ^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `dead_helper` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:28:5
+   |
+LL |     pub fn dead_helper() {}
+   |     ^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `TEST_ONLY_CONST` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:35:1
+   |
+LL | pub const TEST_ONLY_CONST: u32 = 1;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `TEST_ONLY_STATIC` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:36:1
+   |
+LL | pub static TEST_ONLY_STATIC: u32 = 2;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `TestOnlyEnum` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:37:1
+   |
+LL | pub enum TestOnlyEnum {
+   | ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `TestOnlyTrait` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:40:1
+   |
+LL | pub trait TestOnlyTrait {}
+   | ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `TestOnlyAlias` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:41:1
+   |
+LL | pub type TestOnlyAlias = u32;
+   | ^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `TestOnlyTuple` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:42:1
+   |
+LL | pub struct TestOnlyTuple(pub u32);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: item `TestOnlyStruct` is only referenced by test code
+  --> $DIR/test_only_dead_code.rs:43:1
+   |
+LL | pub struct TestOnlyStruct {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: delete it, or make it non-pub so rustc's dead code analysis can check it
+
+warning: 10 warnings emitted
+

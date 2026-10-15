@@ -1,11 +1,51 @@
 warning: use statement after a non-use item; move it to the head of the module
-  --> $DIR/scattered_use_statement.rs:10:1
+  --> $DIR/scattered_use_statement.rs:29:1
    |
-LL | use crate::Alpha as A;
-   | ^^^^^^^^^^^^^^^^^^^^^^
+LL | use std::fmt::Display as _;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
    |
    = help: move this `use` statement to the top of the module with the other `use` statements
    = note: `#[warn(scattered_use_statement)]` on by default
 
-warning: 1 warning emitted
+warning: use statement after a non-use item; move it to the head of the module
+  --> $DIR/scattered_use_statement.rs:32:1
+   |
+LL | use std::fmt::Write as _;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: move this `use` statement to the top of the module with the other `use` statements
+
+warning: use statement after a non-use item; move it to the head of the module
+  --> $DIR/scattered_use_statement.rs:39:1
+   |
+LL | use std::io;
+   | ^^^^^^^^^^^^
+   |
+   = help: move this `use` statement to the top of the module with the other `use` statements
+
+warning: use statement after a non-use item; move it to the head of the module
+  --> $DIR/scattered_use_statement.rs:48:1
+   |
+LL | use checksum::{Crc32 as C1, crc32 as c2};
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: move this `use` statement to the top of the module with the other `use` statements
+
+warning: use statement inside a body; move it to the head of the module
+  --> $DIR/scattered_use_statement.rs:55:5
+   |
+LL |     use std::collections::HashMap;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: move this `use` statement to the top of the module with the other `use` statements
+
+warning: use statement after a non-use item; move it to the head of the module
+  --> $DIR/scattered_use_statement.rs:62:5
+   |
+LL |     use std::rc::Rc;
+   |     ^^^^^^^^^^^^^^^^
+   |
+   = help: move this `use` statement to the top of the module with the other `use` statements
+
+warning: 6 warnings emitted
 

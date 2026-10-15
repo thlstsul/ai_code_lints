@@ -6,7 +6,7 @@ use dylint_linting::config_or_default;
 use rustc_hir::def::Res;
 use rustc_hir::{HirId, ItemKind, Node, Path};
 use rustc_lint::{LateContext, LateLintPass};
-use rustc_span::{kw, Span, SyntaxContext};
+use rustc_span::{Span, SyntaxContext, kw};
 
 rustc_lint::declare_lint! {
     /// ### What it does
@@ -101,7 +101,10 @@ impl<'tcx> LateLintPass<'tcx> for FullyQualifiedPathWithoutUse {
             )
         };
         if in_use_item(cx.tcx.hir_node(hir_id))
-            || cx.tcx.hir_parent_iter(hir_id).any(|(_, node)| in_use_item(node))
+            || cx
+                .tcx
+                .hir_parent_iter(hir_id)
+                .any(|(_, node)| in_use_item(node))
         {
             return;
         }
@@ -120,17 +123,21 @@ impl<'tcx> LateLintPass<'tcx> for FullyQualifiedPathWithoutUse {
             Ok(s) => s,
             Err(_) => return,
         };
-        // A real path snippet has no whitespace; guard against odd spans
-        // (e.g. derive-macro bookkeeping that survived the expansion filter).
-        if snippet.chars().any(|c| c.is_whitespace()) {
-            return;
-        }
         // Derive macros (e.g. clap) may rewrite a user-written short type
         // token into a multi-segment path while keeping the original token's
         // span, so `from_expansion()` and the syntax-context check above do
-        // not fire. If the snippet's segment count differs from the HIR
-        // path's, the path semantics were not written by the user.
-        if snippet.split("::").count() != path.segments.len() {
+        // not fire. If the snippet does not spell out the HIR path's leading
+        // segments, the path semantics were not written by the user.
+        // (Whitespace is stripped first so multi-argument generics such as
+        // `std::io::Result<(A, B)>` are not rejected.)
+        let path_prefix = path
+            .segments
+            .iter()
+            .map(|s| s.ident.as_str())
+            .collect::<Vec<_>>()
+            .join("::");
+        let snippet: String = snippet.chars().filter(|c| !c.is_whitespace()).collect();
+        if !snippet.starts_with(&path_prefix) {
             return;
         }
         let crate_name = if starts_at_crate_kw {
@@ -147,11 +154,16 @@ impl<'tcx> LateLintPass<'tcx> for FullyQualifiedPathWithoutUse {
     fn check_crate_post(&mut self, cx: &LateContext<'tcx>) {
         let config = config_or_default::<Config>("fully_qualified_path_without_use");
         let occurrences = mem::take(&mut self.occurrences);
-        for (crate_name, spans) in occurrences {
+        // 遍历按键排序：HashMap 迭代顺序不定，会导致同一份代码两次运行的
+        // 告警顺序不同（UI 测试因此不稳定）。
+        let mut crate_names: Vec<_> = occurrences.keys().cloned().collect();
+        crate_names.sort_unstable();
+        for crate_name in crate_names {
+            let spans = &occurrences[&crate_name];
             if spans.len() < config.min_occurrences {
                 continue;
             }
-            for (span, snippet) in spans {
+            for (span, snippet) in spans.iter() {
                 let help = if crate_name == "crate" {
                     let item = snippet
                         .rsplit("::")
@@ -167,7 +179,7 @@ impl<'tcx> LateLintPass<'tcx> for FullyQualifiedPathWithoutUse {
                 span_lint_and_help(
                     cx,
                     FULLY_QUALIFIED_PATH_WITHOUT_USE,
-                    span,
+                    *span,
                     format!("fully qualified path `{snippet}` used instead of a `use` import"),
                     None,
                     help,

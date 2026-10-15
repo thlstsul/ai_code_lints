@@ -30,8 +30,10 @@ pub fn is_test_cfg_attr<A: AttributeExt>(attr: &A) -> bool {
         || (attr.path_matches(&[sym::cfg])
             && attr.meta_item_list().is_some_and(|list| {
                 list.iter().any(|item| {
-                    item.meta_item()
-                        .is_some_and(|meta| meta.path.segments.len() == 1 && meta.path.segments[0].ident.name == sym::test)
+                    item.meta_item().is_some_and(|meta| {
+                        meta.path.segments.len() == 1
+                            && meta.path.segments[0].ident.name == sym::test
+                    })
                 })
             }))
 }
@@ -44,9 +46,15 @@ pub fn register_lints(sess: &Session, lint_store: &mut LintStore) {
         scattered_use_statement::SCATTERED_USE_STATEMENT,
         fully_qualified_path::FULLY_QUALIFIED_PATH_WITHOUT_USE,
     ]);
-    lint_store.register_late_lint_pass(Box::new(|_| Box::new(test_only_dead_code::TestOnlyDeadCode::default())));
-    lint_store.register_late_lint_pass(Box::new(|_| Box::new(scattered_use_statement::ScatteredUseStatement::default())));
-    lint_store.register_late_lint_pass(Box::new(|_| Box::new(fully_qualified_path::FullyQualifiedPathWithoutUse::default())));
+    lint_store.register_late_lint_pass(Box::new(|_| {
+        Box::new(test_only_dead_code::TestOnlyDeadCode::default())
+    }));
+    lint_store.register_late_lint_pass(Box::new(|_| {
+        Box::new(scattered_use_statement::ScatteredUseStatement::default())
+    }));
+    lint_store.register_late_lint_pass(Box::new(|_| {
+        Box::new(fully_qualified_path::FullyQualifiedPathWithoutUse::default())
+    }));
 }
 
 #[test]

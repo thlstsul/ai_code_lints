@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::env;
-use std::mem;
 use std::fs;
+use std::mem;
 use std::path::Path as StdPath;
 
 use clippy_utils::diagnostics::span_lint_and_help;
@@ -104,9 +104,9 @@ fn is_test_cfg_attr_any<'tcx>(cx: &LateContext<'tcx>, hir_id: HirId) -> bool {
 
 fn is_in_test_context(cx: &LateContext<'_>, hir_id: HirId) -> bool {
     is_test_cfg_attr_any(cx, hir_id)
-        || cx.tcx.hir_parent_iter(hir_id).any(|(_, node)| {
-            matches!(node, Node::Item(item) if is_test_cfg_attr_any(cx, item.hir_id()))
-        })
+        || cx.tcx.hir_parent_iter(hir_id).any(
+            |(_, node)| matches!(node, Node::Item(item) if is_test_cfg_attr_any(cx, item.hir_id())),
+        )
 }
 
 fn classify_ref(cx: &LateContext<'_>, hir_id: HirId) -> RefKind {
@@ -206,7 +206,11 @@ impl<'tcx> LateLintPass<'tcx> for TestOnlyDeadCode {
         if !is_candidate(&item.kind) {
             return;
         }
-        if !cx.tcx.visibility(item.owner_id.def_id.to_def_id()).is_public() {
+        if !cx
+            .tcx
+            .visibility(item.owner_id.def_id.to_def_id())
+            .is_public()
+        {
             return;
         }
         let item_name = cx.tcx.item_name(item.owner_id.def_id.to_def_id());
@@ -222,9 +226,10 @@ impl<'tcx> LateLintPass<'tcx> for TestOnlyDeadCode {
         // appear in `hir_attrs`, so check the codegen flags the compiler
         // itself derives from them.
         let codegen_attrs = cx.tcx.codegen_fn_attrs(item.owner_id.def_id);
-        if codegen_attrs.flags.intersects(
-            CodegenFnAttrFlags::NO_MANGLE,
-        ) {
+        if codegen_attrs
+            .flags
+            .intersects(CodegenFnAttrFlags::NO_MANGLE)
+        {
             return;
         }
         if is_in_test_context(cx, item.hir_id()) {
