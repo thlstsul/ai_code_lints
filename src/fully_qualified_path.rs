@@ -100,11 +100,21 @@ impl<'tcx> LateLintPass<'tcx> for FullyQualifiedPathWithoutUse {
                 Node::Item(item) if matches!(item.kind, ItemKind::Use(..) | ItemKind::ExternCrate(..))
             )
         };
+        // Skip type alias definitions (`pub type Result<T> = std::result::Result<T, Error>;`):
+        // the path is the alias's definition, not a use site, and importing the
+        // aliased path instead would collide with the alias's own name.
+        let in_ty_alias = |node: Node| {
+            matches!(
+                node,
+                Node::Item(item) if matches!(item.kind, ItemKind::TyAlias(..))
+            )
+        };
         if in_use_item(cx.tcx.hir_node(hir_id))
+            || in_ty_alias(cx.tcx.hir_node(hir_id))
             || cx
                 .tcx
                 .hir_parent_iter(hir_id)
-                .any(|(_, node)| in_use_item(node))
+                .any(|(_, node)| in_use_item(node) || in_ty_alias(node))
         {
             return;
         }
